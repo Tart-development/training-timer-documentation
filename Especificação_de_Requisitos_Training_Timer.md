@@ -134,6 +134,14 @@ O TT será um aplicativo e site que poderá ser usado offline, sem necessidade d
 * **RB02** – A alteração da carga geral do treino deve ajustar automaticamente todos os exercícios vinculados, aumentando ou diminuindo repetições (+/-1) ou tempo (+/-60s).
 * **RB03** – As metas definidas devem ser acompanhadas individualmente por treino ou exercício.
 * **RB04** – As notificações de metas atingidas devem ocorrer apenas dentro do aplicativo (sem push externo).
+---
+# 4. Modelos e Diagramas de Apoio
+## 4.1 Diagrama de Casos de Uso: 
+<img width="1077" height="1308" alt="use-case" src="https://github.com/user-attachments/assets/539d785f-bd11-4e4e-b68f-95210ef112f9" />
+
+## 4.2 Diagramas de Classes ou Entidades: 
+
+<img width="655" height="655" alt="class-diagrama" src="https://github.com/user-attachments/assets/dd8adc10-697d-4062-bd1c-d66897b1e646" />
 
 ---
 
