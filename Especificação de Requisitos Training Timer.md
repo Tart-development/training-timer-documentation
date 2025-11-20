@@ -8,7 +8,7 @@ Conforme IEEE 830
 
 ## **1.1 Propósito:** 
 
-Este documento descreve os requisitos do **TT – Training Timer**, uma plataforma para gestão e acompanhamento de treinos físicos personalizados. O documento servirá como referência para desenvolvedores, testadores e futuros usuários, garantindo clareza quanto às funcionalidades esperadas, limitações e regras de negócio.
+Este documento descreve os requisitos do **TT – Training Timer**, uma plataforma para gestão e acompanhamento de treinos físicos personalizados e gerenciamento de alunos. O documento servirá como referência para desenvolvedores, testadores e futuros usuários, garantindo clareza quanto às funcionalidades esperadas, limitações e regras de negócio.
 
 ## **1.2 Escopo: O TT terá como objetivo:**
 
@@ -51,24 +51,25 @@ Este documento descreve os requisitos do **TT – Training Timer**, uma platafor
 
 Organizado em introdução, descrição geral, requisitos funcionais e não funcionais, diagramas, considerações finais e métodos e técnicas.
 
----
-
 # **2\. Descrição Geral**
 
 ## **2.1 Perspectiva do Produto: Ecossistema TT**
 
-O TT é um **ecossistema digital** composto por um **Aplicativo Mobile (para execução)** e um **Portal Web (para gestão)**, suportados por um Backend Central. O foco do sistema é na **simplicidade** e na **praticidade** para o usuário final durante o treino.
+O TT é um **ecossistema digital** composto por aplicações voltadas **tanto para a execução de treinos** quanto para a **gestão profissional**, suportados por um Backend Central. A arquitetura permite que essas experiências sejam disponibilizadas **em um único aplicativo** (com diferenciação por perfil de acesso) **ou em aplicativos separados**, conforme decisão futura da equipe.
 
-| Componente | Foco Principal | Restrições Chave |
-| :---: | ----- | ----- |
-| **App Mobile** | Execução do treino (timer), histórico e autonomia. | Pode ser usado **offline** e **sem necessidade de login obrigatório** para uso básico. |
-| **Portal Web** | Criação de treinos, gestão de alunos e relatórios avançados (acesso profissional). | Requer conexão à internet e login para gestão de dados. |
+O foco principal é manter o sistema **simples**, **acessível** e **prático** para todos os tipos de usuários — alunos e treinadores.
+
+|                    Componente                   | Foco Principal                                                                     | Restrições / Considerações                                                       |
+| :---------------------------------------------: | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+|   **Aplicativo de Treino** (ou modo de treino)  | Execução de treinos com timer, autonomia, acompanhamento básico e histórico local. | Pode funcionar **offline** e **sem login obrigatório** para recursos essenciais. |
+| **Aplicativo de Gestão** (ou modo profissional) | Criação e edição de treinos, gestão de alunos, métricas e relatórios.              | Requer **login** e normalmente depende de conexão com a internet.                |
 
 O TT permitirá as seguintes funcionalidades em nível de sistema:
 
 * **Estruturação:** Organização dos treinos em blocos e séries (aquecimento, principal, aeróbico, alongamento, etc.).  
-* **Gestão de Treinos:** Importação, exportação e configuração rápida de treinos pré-prontos e personalizados.  
-* **Ajuste Inteligente:** **Ajuste automático de parâmetros de carga** do treino (tempo, repetições ou descanso), baseado em regras pré-definidas.  
+* **Gestão de Treinos:** Importação, exportação e configuração rápida de treinos pré-prontos e personalizados.
+* **Gestão de Alunos:** Acompanhamento de frequencia, historico de treinos e debilidades de cada aluno.
+* **Ajuste Inteligente:** **Ajuste automático de parâmetros de carga** do treino (tempo, repetições ou descanso), baseado em regras pré-definidas. (a ser discutido)
 * **Acompanhamento:** Registro do histórico de execução e acompanhamento da evolução através de indicadores.
 
 ## **2.2 Funções do Produto:**
@@ -85,11 +86,11 @@ As principais funcionalidades do TT incluem:
 
 ## **2.3 Características dos Usuários:** 
 
-Os usuários serão categorizados conforme a sua necessidade de autonomia e profundidade na gestão do treino:
+O TT atenderá dois perfis principais de usuários, cada um com necessidades e níveis de autonomia distintos dentro do ecossistema:
 
-* **Iniciantes:** Buscam treinos prontos e interface intuitiva. Valorizam instruções visuais e sonoras claras.  
-* **Intermediários:** Buscam a personalização de blocos, séries e cargas. Valorizam o registro de histórico e o acompanhamento de metas.  
-* **Avançados / Profissionais:** Focam na evolução detalhada, buscam autonomia total na criação/ajuste e utilizam a funcionalidade de importação/exportação de treinos.
+* **Alunos:** Voltados para execução prática do treino. Buscam simplicidade, clareza e suporte durante a rotina.
+* **Professores / Profissionais:** Responsáveis pela criação, organização e acompanhamento dos treinos dos alunos. Utilizam funcionalidades avançadas e dependem de acesso autenticado. 
+
 
 ## **2.4 Restrições:**
 
@@ -103,7 +104,7 @@ Estas restrições definem a qualidade técnica e o ambiente operacional do sist
 ## **2.5 Suposições e Dependências:**
 
 * **Dependência Básica:** Usuários terão acesso a dispositivos móveis com recursos básicos de áudio e tela tátil.  
-* **Sincronização em Nuvem:** A sincronização de dados e autenticação entre o App e o Portal Web (sincronização em nuvem) **é um requisito de escopo desta fase do projeto**, visando a integração do ecossistema. Contudo, esta funcionalidade deve ser tratada como um recurso opcional e complementar, e não obrigatório para o uso básico e a execução do treino no App.
+* **Sincronização em Nuvem:** A sincronização de dados e autenticação entre o App e o Back-end (sincronização em nuvem) **é um requisito de escopo desta fase do projeto**, visando a integração do ecossistema. Contudo, esta funcionalidade deve ser tratada como um recurso opcional e complementar, e não obrigatório para o uso básico e a execução do treino no App.
 
 ---
 
@@ -111,20 +112,20 @@ Estas restrições definem a qualidade técnica e o ambiente operacional do sist
 
 ## **3.1 Requisitos Funcionais:**
 
-* **RF01** – O sistema deve criar treinos pré-prontos e personalizados para o usuário, com base nas respostas a um questionário inicial.  
-* **RF02** – O sistema deve disponibilizar treinos separados em blocos, e dentro dos blocos em séries.  
-* **RF03** – O sistema deve permitir a organização dos treinos em pastas, de acordo com o objetivo do usuário.  
-* **RF04** – O sistema deve possibilitar importar e exportar treinos.  
-* **RF05** – O sistema deve permitir **CRUD** de treinos personalizados.  
-* **RF06** – O sistema deve permitir definir exercícios por tempo ou por número de repetições.  
-* **RF07** – O sistema deve emitir sons para sinalizar mudanças de estado (exercício, aviso de término próximo, descanso).  
-* **RF08** – O sistema deve permitir pular, pausar ou retroceder exercícios durante a execução.  
-* **RF09** – O sistema deve exibir o próximo exercício durante a tela de descanso.  
-* **RF10** – O sistema deve exibir o primeiro exercício do treino na tela inicial da execução.  
-* **RF11** – O sistema deve permitir configurar mensagens personalizadas que serão exibidas em cada série.  
-* **RF12** – O sistema deve oferecer ajuste unificado e automático da carga do treino.  
-* **RF13** – O sistema deve registrar histórico dos treinos executados, com data de execução.  
-* **RF14** – O sistema deve permitir definição de metas de progresso, associadas a treinos ou exercícios.  
+* **RF01** – O sistema deve criar treinos pré-prontos e personalizados para o usuário, com base nas respostas a um questionário inicial.
+* **RF02** – O sistema deve disponibilizar treinos separados em blocos, e dentro dos blocos em séries.
+* **RF03** – O sistema deve permitir a organização dos treinos em pastas, de acordo com o objetivo do usuário.
+* **RF04** – O sistema deve possibilitar importar e exportar treinos.
+* **RF05** – O sistema deve permitir **CRUD** de treinos personalizados.
+* **RF06** – O sistema deve permitir definir exercícios por tempo ou por número de repetições.
+* **RF07** – O sistema deve emitir sons para sinalizar mudanças de estado (exercício, aviso de término próximo, descanso).
+* **RF08** – O sistema deve permitir pular, pausar ou retroceder exercícios durante a execução.
+* **RF09** – O sistema deve exibir o próximo exercício durante a tela de descanso.
+* **RF10** – O sistema deve exibir o primeiro exercício do treino na tela inicial da execução.
+* **RF11** – O sistema deve permitir configurar mensagens personalizadas que serão exibidas em cada série.
+* **RF12** – O sistema deve oferecer ajuste unificado e automático da carga do treino.
+* **RF13** – O sistema deve registrar histórico dos treinos executados, com data de execução.
+* **RF14** – O sistema deve permitir definição de metas de progresso, associadas a treinos ou exercícios.
 * **RF15** – O sistema deve notificar o usuário quando uma meta for atingida (notificação dentro do app).
 
 ## **3.2 Requisitos Não Funcionais:** 
