@@ -1,7 +1,8 @@
 # **Documento de Especificação de Requisitos de Software (ERS / SRS)**
 
 **Training Timer**  
-Conforme IEEE 830  
+Referência IEEE 830  
+Versão 1.0.0
 ---
 
 # **1\. Introdução**
@@ -12,12 +13,10 @@ Este documento descreve os requisitos do **TT – Training Timer**, uma platafor
 
 ## **1.2 Escopo: O TT terá como objetivo:**
 
-* **Personalização:** Oferecer treinos personalizados a partir de questionários iniciais detalhados.  
-* **Estrutura do Treino:** Disponibilizar treinos organizados em blocos e séries, utilizando a ficha de treino alfabeto.  
-* **Acompanhamento:** Registrar histórico de treinos e acompanhar metas de progresso com indicadores de evolução.  
-* **Usabilidade:** Fornecer recursos auxiliares durante a execução do treino (sons, notificações, mensagens personalizadas).  
-* **Performance (App):** Garantir experiência simples, leve, e sem necessidade obrigatória de login ou internet (apenas o App).  
-* **Gestão Profissional:** Oferecer ferramentas de gestão de alunos dedicadas a academias e profissionais (Personal Trainer).
+* **Ecossistema Híbrido:** Unificar a experiência de execução do aluno com a gestão técnica do Personal Trainer.
+* **Autonomia e Inteligência:** Oferecer questionários para sugestão automática de treinos e acompanhamento de metas.
+* **Conectividade Estendida:** Suporte a Smart Bands para monitoramento de frequência cardíaca e controle remoto do treino.
+* **Resiliência Técnica:** Funcionamento Offline-First com sincronização em nuvem via Supabase.
 
 ## **1.3 Definições, Acrônimos e Abreviações:**
 
@@ -28,49 +27,14 @@ Este documento descreve os requisitos do **TT – Training Timer**, uma platafor
 * **RNF** – Requisito Não Funcional.  
 * **MVP** – Produto Mínimo Viável.
 
-## **1.4 Referências:**
-
-**Aplicativos analisados:** Estes aplicativos serviram como referência de mercado para a identificação de funcionalidades, abordagens de design e usabilidade.
-
-* [https://play.google.com/store/apps/details?id=com.fitifyworkouts.bodyweight.workoutapp](https://play.google.com/store/apps/details?id=com.fitifyworkouts.bodyweight.workoutapp)  
-* [https://play.google.com/store/apps/details?id=com.pacto](https://play.google.com/store/apps/details?id=com.pacto)
-
-**Fontes das pesquisas:** Esses links de fóruns, blogs e comunidades online foram utilizados para **entender as expectativas e os desafios** dos usuários de aplicativos de treino, fornecendo insights diretos sobre suas necessidades e pontos problemáticos.
-
-* [https://www.reddit.com/r/Maromba/comments/1j2h1lk/app\_pra\_gerenciar\_pr%C3%B3prio\_treino/](https://www.reddit.com/r/Maromba/comments/1j2h1lk/app_pra_gerenciar_pr%C3%B3prio_treino/)  
-* [https://www.reddit.com/r/Gravl/comments/1jfsrhp/como\_deixar\_os\_treinos\_organizados/](https://www.reddit.com/r/Gravl/comments/1jfsrhp/como_deixar_os_treinos_organizados/)  
-* [https://www.reddit.com/r/Maromba/comments/1c7gjf7/recomenda%C3%A7%C3%A3o\_de\_aplicativo\_de\_ficha\_de\_treino/](https://www.reddit.com/r/Maromba/comments/1c7gjf7/recomenda%C3%A7%C3%A3o_de_aplicativo_de_ficha_de_treino/)  
-* [https://www.reddit.com/r/Maromba/comments/12imwkm/aplicativo\_que\_monta\_treino\_pra\_mim/](https://www.reddit.com/r/Maromba/comments/12imwkm/aplicativo_que_monta_treino_pra_mim/)  
-* [https://blog.nextfit.com.br/aplicativo-para-treino-academia/](https://blog.nextfit.com.br/aplicativo-para-treino-academia/)  
-* [https://www.reddit.com/r/Maromba/comments/1etmpyi/sugest%C3%A3o\_de\_aplicativo\_gratuito\_para/](https://www.reddit.com/r/Maromba/comments/1etmpyi/sugest%C3%A3o_de_aplicativo_gratuito_para/)  
-* [https://www.hipertrofia.org/forum/topic/266748-como-voc%C3%AAs-organizam-fichas-programas-de-treinamento](https://www.hipertrofia.org/forum/topic/266748-como-voc%C3%AAs-organizam-fichas-programas-de-treinamento)  
-* [https://www.reddit.com/r/Maromba/comments/xr7wgm/apps\_de\_organiza%C3%A7%C3%A3o\_de\_treino/](https://www.reddit.com/r/Maromba/comments/xr7wgm/apps_de_organiza%C3%A7%C3%A3o_de_treino/)  
-* [https://www.reddit.com/r/Maromba/comments/17s7q0p/vale\_a\_pena\_usar\_app\_de\_treino\_na\_academia/](https://www.reddit.com/r/Maromba/comments/17s7q0p/vale_a_pena_usar_app_de_treino_na_academia/)
-
-## **1.5 Visão Geral do Documento:** 
-
-Organizado em introdução, descrição geral, requisitos funcionais e não funcionais, diagramas, considerações finais e métodos e técnicas.
-
 # **2\. Descrição Geral**
 
 ## **2.1 Perspectiva do Produto: Ecossistema TT**
 
-O TT é um **ecossistema digital** composto por aplicações voltadas **tanto para a execução de treinos** quanto para a **gestão profissional**, suportados por um Backend Central. A arquitetura permite que essas experiências sejam disponibilizadas **em um único aplicativo** (com diferenciação por perfil de acesso) **ou em aplicativos separados**, conforme decisão futura da equipe.
-
-O foco principal é manter o sistema **simples**, **acessível** e **prático** para todos os tipos de usuários — alunos e treinadores.
-
-|                    Componente                   | Foco Principal                                                                     | Restrições / Considerações                                                       |
-| :---------------------------------------------: | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-|   **Aplicativo de Treino** (ou modo de treino)  | Execução de treinos com timer, autonomia, acompanhamento básico e histórico local. | Pode funcionar **offline** e **sem login obrigatório** para recursos essenciais. |
-| **Aplicativo de Gestão** (ou modo profissional) | Criação e edição de treinos, gestão de alunos, métricas e relatórios.              | Requer **login** e normalmente depende de conexão com a internet.                |
-
-O TT permitirá as seguintes funcionalidades em nível de sistema:
-
-* **Estruturação:** Organização dos treinos em blocos e séries (aquecimento, principal, aeróbico, alongamento, etc.).  
-* **Gestão de Treinos:** Importação, exportação e configuração rápida de treinos pré-prontos e personalizados.
-* **Gestão de Alunos:** Acompanhamento de frequencia, historico de treinos e debilidades de cada aluno.
-* **Ajuste Inteligente:** **Ajuste automático de parâmetros de carga** do treino (tempo, repetições ou descanso), baseado em regras pré-definidas. (a ser discutido)
-* **Acompanhamento:** Registro do histórico de execução e acompanhamento da evolução através de indicadores.
+O TT é dividido em três módulos principais de experiência dentro do mesmo App:
+1. **Modo Autônomo:** Usuário comum gerencia seus próprios treinos e metas.
+2. **Modo Personal:** Ferramentas de prescrição, gestão de alunos e análise de métricas.
+3. **Modo Aluno (Guiado):** Interface simplificada focada exclusivamente na execução do que foi prescrito pelo Personal.
 
 ## **2.2 Funções do Produto:**
 
@@ -95,11 +59,8 @@ O TT atenderá dois perfis principais de usuários, cada um com necessidades e n
 ## **2.4 Restrições:**
 
 Estas restrições definem a qualidade técnica e o ambiente operacional do sistema:
-
-* **Performance do App:** O aplicativo deve funcionar em dispositivos Android de entrada (low-end), com baixo consumo de memória e bateria.  
-* **Conectividade:** O uso básico e a execução do treino não devem depender de conexão à internet. A sincronização de dados e a gestão de alunos requerem conexão.  
-* **Monetização:** Não deve exibir anúncios que prejudiquem ou interrompam a execução do treino.  
-* **UX/Velocidade:** A interface deve ser limpa, intuitiva e o tempo de resposta das transições e ações deve ser minimizado.
+* **Interface Imersiva:** No modo de execução, os elementos devem ser grandes para fácil visualização à distância.
+* **Consumo de Bateria:** A integração com Smart Bands não deve comprometer a autonomia do dispositivo móvel.
 
 ## **2.5 Suposições e Dependências:**
 
@@ -112,36 +73,61 @@ Estas restrições definem a qualidade técnica e o ambiente operacional do sist
 
 ## **3.1 Requisitos Funcionais:**
 
-* **RF01** – O sistema deve criar treinos pré-prontos e personalizados para o usuário, com base nas respostas a um questionário inicial.
-* **RF02** – O sistema deve disponibilizar treinos separados em blocos, e dentro dos blocos em séries.
-* **RF03** – O sistema deve permitir a organização dos treinos em pastas, de acordo com o objetivo do usuário.
-* **RF04** – O sistema deve possibilitar importar e exportar treinos.
-* **RF05** – O sistema deve permitir **CRUD** de treinos personalizados.
-* **RF06** – O sistema deve permitir definir exercícios por tempo ou por número de repetições.
-* **RF07** – O sistema deve emitir sons para sinalizar mudanças de estado (exercício, aviso de término próximo, descanso).
-* **RF08** – O sistema deve permitir pular, pausar ou retroceder exercícios durante a execução.
-* **RF09** – O sistema deve exibir o próximo exercício durante a tela de descanso.
-* **RF10** – O sistema deve exibir o primeiro exercício do treino na tela inicial da execução.
-* **RF11** – O sistema deve permitir configurar mensagens personalizadas que serão exibidas em cada série.
-* **RF12** – O sistema deve oferecer ajuste unificado e automático da carga do treino.
-* **RF13** – O sistema deve registrar histórico dos treinos executados, com data de execução.
-* **RF14** – O sistema deve permitir definição de metas de progresso, associadas a treinos ou exercícios.
-* **RF15** – O sistema deve notificar o usuário quando uma meta for atingida (notificação dentro do app).
+| ID | Requisito Funcional | Descrição Detalhada | Prioridade |
+| --- | --- | --- | --- |
+| **RF01** | Sugestão de Treino | O sistema deve sugerir treinos pré-prontos com base num questionário inicial (objetivo/nível). | Must |
+| **RF02** | Estrutura em Blocos | O sistema deve disponibilizar treinos organizados em blocos e séries (ex: Aquecimento, Principal). | Must |
+| **RF03** | Organização em Pastas | O sistema deve permitir organizar treinos em pastas/categorias por objetivo (ex: Cardio, Hipertrofia). | Could |
+| **RF04** | Importação/Exportação | O sistema deve possibilitar a importação e exportação de treinos entre utilizadores. | Could |
+| **RF05** | CRUD de Treinos | O sistema deve permitir criar, ler, atualizar e eliminar treinos personalizados. | Must |
+| **RF06** | Modos de Exercício | O sistema deve permitir definir exercícios por número de repetições ou por tempo (cronómetro). | Must |
+| **RF07** | Feedback Sonoro | O sistema deve emitir sons para sinalizar mudanças de estado (início, descanso, término próximo). | Must |
+| **RF08** | Controlo de Execução | O sistema deve permitir saltar, pausar ou retroceder exercícios durante o treino. | Must |
+| **RF09** | Antecipação de Carga | O sistema deve exibir o próximo exercício durante o tempo de descanso. | Must |
+| **RF10** | Início Rápido | O sistema deve exibir o primeiro exercício do treino imediatamente ao iniciar a execução. | Must |
+| **RF11** | Mensagens Personalizadas | O sistema deve permitir configurar notas/mensagens que surgem em séries específicas. | Could |
+| **RF12** | Ajuste de Carga Unificado | O sistema deve oferecer ajuste automático e unificado da carga de treino (tempo/reps). | Could |
+| **RF13** | Registo de Histórico | O sistema deve registar o histórico de treinos executados com data e métricas de performance. | Should |
+| **RF14** | Definição de Metas | O sistema deve permitir definir metas de progresso associadas a treinos ou exercícios. | Should |
+| **RF15** | Notificação de Metas | O sistema deve notificar o utilizador (dentro da app) quando uma meta for atingida. | Should |
+| **RF16** | Vínculo Personal-Aluno | O sistema deve permitir a conexão entre Personal e Aluno via código ou link de convite. | Must |
+| **RF17** | Prescrição Remota | O sistema deve permitir que o Personal prescreva e atualize treinos diretamente no app do Aluno. | Must |
+| **RF18** | Integração Wearable (RH) | O sistema deve exibir a frequência cardíaca em tempo real através de Smart Bands conectadas. | Should |
+| **RF19** | Controlo via Wearable | O sistema deve permitir controlar o fluxo do treino (pausar/avançar) através do dispositivo vestível. | Could |
+| **RF20** | Dashboards de Evolução | O sistema deve gerar gráficos de volume de carga, frequência e evolução física. | Should |
+| **RF21** | Sincronização Cloud | O sistema deve sincronizar automaticamente os dados locais com a nuvem (Supabase) quando houver internet. | Must |
+| **RF22** | Questionário de Saúde | O sistema deve permitir que o Personal visualize as respostas do questionário de saúde/objetivos do Aluno. | Must |
 
 ## **3.2 Requisitos Não Funcionais:** 
 
-* **RNF01** – O sistema deve possuir navegação simples e intuitiva.  
-* **RNF02** – O sistema deve ser leve e rápido, adequado para dispositivos de entrada.  
-* **RNF03** – O sistema deve apresentar interface limpa, com elementos de fácil percepção.  
-* **RNF04** – O sistema não deve exibir anúncios intrusivos; caso existam, não podem atrapalhar ou limitar o uso.  
-* **RNF05** – O sistema deve funcionar sem necessidade de login ou acesso à internet.
+| ID | Categoria | Descrição do Requisito | Prioridade |
+| --- | --- | --- | --- |
+| **RNF01** | Usabilidade | O sistema deve possuir navegação simples e intuitiva para não interromper o fluxo do treino. | **Must** |
+| **RNF02** | Desempenho | O sistema deve ser leve e rápido, otimizado para dispositivos Android de entrada (*low-end*). | **Must** |
+| **RNF03** | Interface | O sistema deve apresentar uma interface limpa, com elementos visuais de fácil percepção e suporte a Temas (Claro/Escuro). | **Must** |
+| **RNF04** | Ética/UX | O sistema não deve exibir anúncios intrusivos que atrapalhem ou limitem a execução do exercício. | **Must** |
+| **RNF05** | Disponibilidade | O sistema deve permitir o uso básico e a execução de treinos sem necessidade de login ou acesso à internet. | **Must** |
+| **RNF06** | Confiabilidade | O sistema deve garantir que os dados registados localmente sejam preservados em caso de fecho inesperado da aplicação. | **Must** |
+| **RNF07** | Escalabilidade | A arquitetura deve permitir a transição fluida entre o "Modo Aluno" e o "Modo Personal" dentro da mesma aplicação. | **Should** |
+| **RNF08** | Sincronização | A sincronização de dados com a nuvem deve ocorrer em segundo plano sem impactar a performance da interface (UI). | **Should** |
+| **RNF09** | Portabilidade | Os dados de treino e perfil devem ser facilmente restaurados ao realizar login num novo dispositivo. | **Should** |
+| **RNF10** | Acessibilidade | O sistema deve suportar sinais sonoros e vibração para guiar o utilizador sem necessidade de olhar para o ecrã. | **Should** |
+| **RNF11** | Segurança | Apenas o Personal Trainer vinculado deve ter permissão para visualizar e editar os dados de progresso dos seus alunos. | **Must** |
+| **RNF12** | Interoperabilidade | O sistema deve ser capaz de comunicar com dispositivos *wearables* via Bluetooth Low Energy (BLE) para leitura de batimentos. | **Should** |
 
 ## **3.3 Regras de Negócio:** 
 
-* **RB01 –** O questionário inicial deve determinar quais treinos pré-prontos serão sugeridos ao usuário.  
-* **RB02 –** A alteração da carga geral do treino deve ajustar automaticamente todos os exercícios vinculados, aumentando ou diminuindo repetições (+/-1) ou tempo (+/-60s).  
-* **RB03 –** As metas definidas devem ser acompanhadas individualmente por treino ou exercício.  
-* **RB04 –** As notificações de metas atingidas devem ocorrer apenas dentro do aplicativo (sem push externo).
+| ID | Regra de Negócio | Descrição Detalhada |
+| --- | --- | --- |
+| **RB01** | Filtro de Sugestão | O questionário inicial deve determinar obrigatoriamente quais treinos pré-prontos serão sugeridos ao utilizador, filtrando por objetivo (ex: hipertrofia) e nível (ex: iniciante). |
+| **RB02** | Ajuste Inteligente de Carga | A alteração da carga geral do treino deve ajustar automaticamente todos os exercícios vinculados, aumentando ou diminuindo repetições (+/-1) ou tempo (+/-60s) proporcionalmente. |
+| **RB03** | Individualidade de Metas | As metas definidas devem ser acompanhadas e validadas individualmente por cada treino ou exercício específico para garantir a precisão da evolução. |
+| **RB04** | Notificações Locais | As notificações de metas atingidas ou lembretes de treino devem ocorrer estritamente dentro do aplicativo, sem dependência de serviços de *push* externos (Firebase/APNs) para garantir o funcionamento offline. |
+| **RB05** | Hierarquia de Edição | No "Modo Aluno", o utilizador está impedido de alterar a estrutura técnica do treino (exercícios, ordens, blocos) definida pelo Personal Trainer, podendo apenas editar os dados de execução (carga e repetições feitas). |
+| **RB06** | Exclusividade de Vínculo | Cada Aluno pode estar vinculado a apenas um Personal Trainer de cada vez para evitar conflitos de prescrição e sobreposição de fichas de treino. |
+| **RB07** | Validação de Sincronização | Em caso de conflito de dados (edição offline em dois dispositivos diferentes), o sistema deve aplicar a regra de "A última escrita vence" (*Last Write Wins*) baseada no *timestamp* do dispositivo. |
+| **RB08** | Ciclo de Vida do Treino | O Personal Trainer pode definir uma data de expiração para uma ficha de treino; após essa data, o sistema deve alertar tanto o Personal quanto o Aluno sobre a necessidade de renovação da prescrição. |
+| **RB09** | Privacidade de Métricas | Os dados detalhados de saúde e evolução de um Aluno só ficam visíveis para o Personal Trainer após a aceitação formal do convite de conexão dentro do ecossistema. |
 
 ---
 
@@ -153,49 +139,7 @@ Estas restrições definem a qualidade técnica e o ambiente operacional do sist
 
 ---
 
-# **5\. Considerações Finais** 
-
-## **5.1 Prioridade dos Requisitos:** 
-
-* **M (Must Have):** RF01, RF02, RF05, RF06, RF07, RF08, RF09, RF10, RNF01, RNF03, RNF05, RNF02, RB01.  
-* **S (Should Have):** RF13, RF14, RF15, RB03.  
-* **C (Could Have):** RF03, RF04, RF11, RF12, RNF04, RB02, RB04.  
-* **W (Won't Have):** (Nenhum nesta versão)
-
-## **5.2 Apêndices:**
-
-### **Glossário:**
-
-* **TT (Training Timer): Ecossistema digital** composto por um **App Mobile** (para execução de treinos) e um **Portal Web** (para gestão de alunos e criação de treinos), focado em treinos personalizados e acompanhamento de metas. O uso básico do App mantém a característica de simplicidade e funcionalidade offline.  
-* **Treinos em Blocos e Séries:** Estrutura fundamental de organização da **Ficha de Treino**. Os **Blocos** dividem o treino em seções lógicas (ex: Aquecimento, Principal, Aeróbicos) e as **Séries** definem o padrão de repetições ou tempo de execução do exercício, garantindo flexibilidade e versatilidade para diversas modalidades (musculação, aeróbicos, etc.)**.**
-
-### **Exemplos de Aplicação da Estrutura de Treino:**
-
-Para ilustrar a versatilidade da estrutura de **Blocos e Séries** dentro de uma **Ficha de Treino**, seguem dois exemplos distintos que o ecossistema TT deve suportar:
-
-### **1\. Exemplo de Treino por Repetição (Musculação – Foco na Carga)**
-
-Este exemplo simula um Bloco Principal de um treino alfabético (ex: Treino A), onde a execução e o acompanhamento se baseiam na contagem de repetições e carga registrada.
-
-| Série (Ordem) | Exercício | Séries | Repetições | Descanso (Implícito) |
-| :---: | :---: | :---: | :---: | :---: |
-| **Série 1** | Supino Reto | 4 | 10 | 60 segundos |
-| **Série 2** | Crossover | 3 | 12 | 45 segundos |
-| **Série 3** | Tríceps Corda | 3 | 15 | 45 segundos |
-
-### **2\. Exemplo de Treino por Tempo (HIIT/Aeróbico – Foco no Ritmo)**
-
-Este exemplo simula um bloco de treino baseado no tempo de execução, comum em treinos de alta intensidade (HIIT) ou funcionais.
-
-| Série (Ordem) | Exercício | Duração (Execução) | Séries (Ciclos) | Descanso (Entre Séries) |
-| :---: | :---: | :---: | :---: | :---: |
-| **Série 1** | Corrida no lugar | 30 segundos | 3 | 15 segundos |
-| **Série 2** | Agachamento com salto | 30 segundos | 3 | 15 segundos |
-| **Série 3** | Burpees | 30 segundos | 3 | 15 segundos |
-
----
-
-# **6\. Métodos e Técnicas** 
+# **5\. Métodos e Técnicas** 
 
 ## **Entrevista:** 
 
