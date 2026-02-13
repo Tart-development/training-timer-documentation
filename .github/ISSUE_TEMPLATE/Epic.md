@@ -31,13 +31,6 @@ assignees: ''
 
 ---
 
-## Histórias de Usuário
-
-- [ ] **[US-NNN]:** nome do user story
-- [ ] **[US-NNN]:** nome do user story
-
----
-
 ## Requisitos Não-Funcionais
 
 | Nome | Descrição |
