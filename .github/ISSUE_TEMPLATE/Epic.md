@@ -1,7 +1,7 @@
 ---
-name: Novo Épico
-about: Template destinado para a criação de novos épicos.
-title: "[EPIC-NN]: "
+name: New Epic
+about: This template is designed for creating new epics.
+title: "[EPIC-XX]: "
 labels: Epic
 assignees: ''
 
