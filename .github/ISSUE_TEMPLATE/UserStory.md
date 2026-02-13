@@ -1,15 +1,11 @@
 ---
-name: HU_TEMPLATE.md
-about: Describe this issue template's purpose here.
-title: HU-X.Y
+name: Nova História de Usuário
+about: Template destinado para a criação de novas histórias de usuário.
+title: "[US-XX.N]: "
 labels: user stories
 assignees: ''
 
 ---
-
-# ✍️ [HU-ID]: [Título da História de Usuário]
-
-## A Estrutura dos 3 Ws (Quem, O Quê, Por Quê)
 
 * ### **WHO? (Quem?)**
     * `[Nome da Persona, ex: Professor Orientador]`
@@ -25,21 +21,20 @@ assignees: ''
 
 ---
 
-### História de Usuário Completa
+## História de Usuário
 
 > Como um **[Quem]**, eu quero **[O Quê]**, para que eu possa **[Por Quê]**.
 
 ### Descrição
 
-[Descreva em 1-2 parágrafos o contexto desta história. Qual a tela, o fluxo e o que acontece antes/depois.]
+[Descreva esta história. Qual a tela, o fluxo e o que acontece antes/depois.]
 
 ---
 
-### ✅ Critérios de Aceite
+### Critérios de Aceite
 
 Estes são os testes a serem aprovados para que a história seja considerada CONCLUÍDA.
 
 - [ ] **[Cenário 1 - Sucesso]:** [Descrição do resultado esperado em caso de sucesso.]
 - [ ] **[Cenário 2 - Validação]:** [Descrição da validação ou regra de negócio que deve ser respeitada.]
 - [ ] **[Cenário 3 - Erro/Exceção]:** [Descrição do tratamento de erro (ex: Se o professor não for do perfil certo, uma mensagem deve aparecer).]
-- [ ] ...
