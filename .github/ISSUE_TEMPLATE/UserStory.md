@@ -8,16 +8,16 @@ assignees: ''
 ---
 
 * ### **WHO? (Quem?)**
-    * `[Nome da Persona, ex: Professor Orientador]`
-    * *[Breve descrição do contexto da persona para esta história.]*
+    **[Nome da Persona, ex: Professor Orientador]**
+    *[Breve descrição do contexto da persona para esta história.]*
 
 * ### **WHAT? (O Quê?)**
-    * `[Ação que será realizada, ex: Ativar meu perfil no Banco de Orientadores]`
-    * *[A descrição da funcionalidade em si.]*
+    **[Ação que será realizada, ex: Ativar meu perfil no Banco de Orientadores]**
+    *[A descrição da funcionalidade em si.]*
 
 * ### **WHY? (Por quê?)**
-    * `[O valor ou benefício, ex: Para que eu possa ser listado como um potencial orientador]`
-    * *[O resultado de negócio ou valor agregado.]*
+    **[O valor ou benefício, ex: Para que eu possa ser listado como um potencial orientador]**
+    *[O resultado de negócio ou valor agregado.]*
 
 ---
 
