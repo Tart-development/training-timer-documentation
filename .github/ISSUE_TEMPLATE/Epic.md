@@ -1,7 +1,7 @@
 ---
 name: Novo Épico
 about: Template destinado para a criação de novos épicos.
-title: "[EPIC-XX]: "
+title: "[EPIC-NN]: "
 labels: epic
 assignees: ''
 
@@ -33,9 +33,8 @@ assignees: ''
 
 ## Histórias de Usuário
 
-- [ ] [Nome do HU]
-- [ ] [Nome do HU]
-- [ ] [Nome do HU]
+- [ ] **[US-NNN]:** nome do user story
+- [ ] **[US-NNN]:** nome do user story
 
 ---
 
@@ -53,4 +52,3 @@ Para que este épico seja considerado **concluído**, o fluxo de usuário deve e
 
 * [ ] Critério de Aceite 1 (Alto Nível)
 * [ ] Critério de Aceite 2 (Fluxo Completo)
-* [ ] ...
