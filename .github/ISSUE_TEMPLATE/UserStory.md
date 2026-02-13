@@ -2,7 +2,7 @@
 name: Nova História de Usuário
 about: Template destinado para a criação de novas histórias de usuário.
 title: "[US-XX.N]: "
-labels: user stories
+labels: User History
 assignees: ''
 
 ---
