@@ -82,7 +82,7 @@ Estas restrições definem a qualidade técnica e o ambiente operacional do sist
 | **RF05** | CRUD de Treinos | O sistema deve permitir criar, ler, atualizar e eliminar treinos personalizados. | Must |
 | **RF06** | Modos de Exercício | O sistema deve permitir definir exercícios por número de repetições ou por tempo (cronómetro). | Must |
 | **RF07** | Feedback Sonoro | O sistema deve emitir sons para sinalizar mudanças de estado (início, descanso, término próximo). | Must |
-| **RF08** | Controlo de Execução | O sistema deve permitir saltar, pausar ou retroceder exercícios durante o treino. | Must |
+| **RF08** | Controle de Execução | O sistema deve permitir saltar, pausar ou retroceder exercícios durante o treino. | Must |
 | **RF09** | Antecipação de Carga | O sistema deve exibir o próximo exercício durante o tempo de descanso. | Must |
 | **RF10** | Início Rápido | O sistema deve exibir o primeiro exercício do treino imediatamente ao iniciar a execução. | Must |
 | **RF11** | Mensagens Personalizadas | O sistema deve permitir configurar notas/mensagens que surgem em séries específicas. | Could |
