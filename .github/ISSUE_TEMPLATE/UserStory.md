@@ -1,8 +1,8 @@
 ---
-name: New User History
-about: This template is designed for creating new user history.
+name: New User Story
+about: This template is designed for creating new user story.
 title: "[UH-XX.N]: "
-labels: User History
+labels: User Story
 assignees: ''
 
 ---
