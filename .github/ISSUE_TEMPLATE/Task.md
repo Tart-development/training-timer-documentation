@@ -1,7 +1,7 @@
 ---
 name: New Task
 about: This template is designed for creating new task.
-title: "[Task-XX.X.N]: "
+title: "[TASK-XX.X.N]: "
 labels: Task
 assignees: ''
 
