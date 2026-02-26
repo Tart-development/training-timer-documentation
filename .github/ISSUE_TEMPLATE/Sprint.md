@@ -3,6 +3,7 @@ name: New Sprint Planning & Review
 about: Defining the scope and delivering on the Sprint.
 title: "[SPRINT-XX]: Planejamento e Review"
 labels: Sprint
+milestone: "Sprint XX"
 
 ---
 
