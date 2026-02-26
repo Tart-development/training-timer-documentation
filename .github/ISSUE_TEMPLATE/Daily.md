@@ -1,5 +1,5 @@
 ---
-name: New Daily
+name: New Sprint Daily
 about: Daily team synchronization log.
 title: "[DAILY-XX.NN]: DD/MM/AAAA"
 labels: Daily

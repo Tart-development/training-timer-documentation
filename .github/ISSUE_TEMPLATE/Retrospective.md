@@ -1,5 +1,5 @@
 ---
-name: Sprint Retrospective
+name: New Sprint Retrospective
 about: Lessons learned from the sprint.
 title: "[RETRO-XX]: Sprint XX"
 labels: Retrospective
