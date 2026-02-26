@@ -131,15 +131,7 @@ Estas restrições definem a qualidade técnica e o ambiente operacional do sist
 
 ---
 
-# **4\. Modelos e Diagramas de Apoio**
-
-## **4.1 Diagrama de Casos de Uso:** 
-
-## **4.2 Diagramas de Classes ou Entidades:** 
-
----
-
-# **5\. Métodos e Técnicas** 
+# **4\. Métodos e Técnicas** 
 
 ## **Entrevista:** 
 
