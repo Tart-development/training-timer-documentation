@@ -1,0 +1,108 @@
+@startuml TT_IFF_EER
+
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam nodesep 150
+hide circle
+
+' ─── ENTIDADES ───────────────────────────────────────────
+
+entity "Usuario" as User {
+  * id : BIGINT <<PK>>
+  --
+  * nome : VARCHAR(100)
+  * email : VARCHAR(150) <<UNIQUE>>
+  * senha_hash : VARCHAR(255)
+  * role : ENUM(PROFESSOR, ALUNO)
+  * ativo : BOOLEAN
+}
+
+entity "FichaDeTreino" as WorkoutSheet {
+  * id : BIGINT <<PK>>
+  --
+  * nome : VARCHAR(100)
+  * criado_em : DATETIME
+  * professor_id : BIGINT <<FK>>
+}
+
+entity "Bloco" as WorkoutBlock {
+  * id : BIGINT <<PK>>
+  --
+  * nome : VARCHAR(100)
+  * ordem : INT
+  * ficha_id : BIGINT <<FK>>
+}
+
+entity "Serie" as ExerciseSet {
+  * id : BIGINT <<PK>>
+  --
+  * nome_exercicio : VARCHAR(100)
+  * tipo : ENUM(TEMPO, REPETICOES)
+  * valor : INT
+  * descanso_seg : INT
+  * ordem : INT
+  * bloco_id : BIGINT <<FK>>
+}
+
+entity "Atribuicao" as SheetAssignment {
+  * id : BIGINT <<PK>>
+  --
+  * data_inicio : DATE
+    data_fim : DATE
+  * ficha_id : BIGINT <<FK>>
+  * aluno_id : BIGINT <<FK>>
+}
+
+entity "Sessao" as WorkoutSession {
+  * id : BIGINT <<PK>>
+  --
+  * nome_ficha_snapshot : VARCHAR(100)
+  * iniciado_em : DATETIME
+  * duracao_seg : INT
+  * status : ENUM(COMPLETA, INTERROMPIDA)
+  * aluno_id : BIGINT <<FK>>
+  * ficha_id : BIGINT <<FK>>
+}
+
+entity "Meta" as Goal {
+  * id : BIGINT <<PK>>
+  --
+  * descricao : TEXT
+  * status : ENUM(EM_PROGRESSO, ATINGIDA)
+    nome_exercicio : VARCHAR(100)
+  * aluno_id : BIGINT <<FK>>
+  * professor_id : BIGINT <<FK>>
+    ficha_id : BIGINT <<FK>>
+}
+
+' ─── ESPECIALIZAÇÕES (EER) ───────────────────────────────
+
+entity "Professor" as ProfessorExt {
+  * usuario_id : BIGINT <<PK, FK>>
+}
+
+entity "Aluno" as AlunoExt {
+  * usuario_id : BIGINT <<PK, FK>>
+}
+
+' ─── RELACIONAMENTOS ─────────────────────────────────────
+
+User ||-left-o{ ProfessorExt : "é especializado como"
+User ||-right-o{ AlunoExt    : "é especializado como"
+
+ProfessorExt ||--o{ WorkoutSheet     : "cria (1,N)"
+ProfessorExt ||--o{ Goal             : "define (1,N)"
+
+WorkoutSheet ||-up-|{ WorkoutBlock     : "contém (1,N)"
+WorkoutBlock ||-up-|{ ExerciseSet      : "contém (1,N)"
+
+WorkoutSheet ||-right-o{ SheetAssignment  : "é atribuída via (1,N)"
+AlunoExt     ||-left-o{ SheetAssignment  : "recebe (1,N)"
+
+AlunoExt     ||--o{ WorkoutSession   : "executa (1,N)"
+WorkoutSheet ||--o{ WorkoutSession   : "referenciada em (1,N)"
+
+AlunoExt     ||-up-o{ Goal             : "possui (0,N)"
+WorkoutSheet |o-left-o{ Goal             : "referenciada em (0,N)"
+
+@enduml
