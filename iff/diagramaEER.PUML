@@ -85,8 +85,8 @@ entity "Aluno" as AlunoExt {
 
 ' ─── RELACIONAMENTOS ─────────────────────────────────────
 
-User ||--|| ProfessorExt : "é especializado como"
-User ||--|| AlunoExt    : "é especializado como"
+User ||--o| ProfessorExt : "é especializado como"
+User ||--o| AlunoExt    : "é especializado como"
 
 ProfessorExt ||--o{ WorkoutSheet     : "cria (1,N)"
 ProfessorExt ||--o{ Goal             : "define (1,N)"
