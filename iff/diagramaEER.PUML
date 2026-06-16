@@ -21,7 +21,7 @@ entity "FichaDeTreino" as WorkoutSheet {
   --
   * nome : VARCHAR(100)
   * criado_em : DATETIME
-  * ativa : BOOLEAN
+  * ativo : BOOLEAN
   * professor_id : BIGINT <<FK>>
 }
 
