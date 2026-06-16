@@ -13,7 +13,6 @@ entity "Usuario" as User {
   * nome : VARCHAR(100)
   * email : VARCHAR(150) <<UNIQUE>>
   * senha_hash : VARCHAR(255)
-  * role : ENUM(PROFESSOR, ALUNO)
   * ativo : BOOLEAN
 }
 
@@ -60,8 +59,7 @@ entity "Sessao" as WorkoutSession {
   * iniciado_em : DATETIME
   * duracao_seg : INT
   * status : ENUM(COMPLETA, INTERROMPIDA)
-  * aluno_id : BIGINT <<FK>>
-  * ficha_id : BIGINT <<FK>>
+  * atribuicao_id : BIGINT <<FK>>
 }
 
 entity "Meta" as Goal {
@@ -87,8 +85,8 @@ entity "Aluno" as AlunoExt {
 
 ' ─── RELACIONAMENTOS ─────────────────────────────────────
 
-User ||-left-o{ ProfessorExt : "é especializado como"
-User ||-right-o{ AlunoExt    : "é especializado como"
+User ||--|| ProfessorExt : "é especializado como"
+User ||--|| AlunoExt    : "é especializado como"
 
 ProfessorExt ||--o{ WorkoutSheet     : "cria (1,N)"
 ProfessorExt ||--o{ Goal             : "define (1,N)"
@@ -99,10 +97,9 @@ WorkoutBlock ||-up-|{ ExerciseSet      : "contém (1,N)"
 WorkoutSheet ||-right-o{ SheetAssignment  : "é atribuída via (1,N)"
 AlunoExt     ||-left-o{ SheetAssignment  : "recebe (1,N)"
 
-AlunoExt     ||--o{ WorkoutSession   : "executa (1,N)"
-WorkoutSheet ||--o{ WorkoutSession   : "referenciada em (1,N)"
+SheetAssignment |o-up-o{ WorkoutSession   : "gera (0,N)"
 
-AlunoExt     ||-up-o{ Goal             : "possui (0,N)"
+AlunoExt     |o-up-o{ Goal             : "possui (0,N)"
 WorkoutSheet |o-left-o{ Goal             : "referenciada em (0,N)"
 
 @enduml
