@@ -21,6 +21,7 @@ entity "FichaDeTreino" as WorkoutSheet {
   --
   * nome : VARCHAR(100)
   * criado_em : DATETIME
+  * ativa : BOOLEAN
   * professor_id : BIGINT <<FK>>
 }
 
@@ -55,7 +56,6 @@ entity "Atribuicao" as SheetAssignment {
 entity "Sessao" as WorkoutSession {
   * id : BIGINT <<PK>>
   --
-  * nome_ficha_snapshot : VARCHAR(100)
   * iniciado_em : DATETIME
   * duracao_seg : INT
   * status : ENUM(COMPLETA, INTERROMPIDA)

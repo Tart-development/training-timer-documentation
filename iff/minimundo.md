@@ -56,7 +56,7 @@ Cada bloco contém uma ou mais **Séries**, que são as unidades atômicas de ex
 - **Tempo de descanso** em segundos, exibido ao aluno entre as séries;
 - **Ordem** de exibição dentro do bloco.
 
-A exclusão de uma ficha não apaga o histórico de sessões dos alunos que a executaram. O nome da ficha é preservado como um *snapshot* dentro do registro de cada sessão.
+Fichas de treino não são removidas fisicamente do sistema. Quando uma ficha deixa de ser utilizada, ela é desativada. Dessa forma, o histórico de atribuições e sessões permanece íntegro e acessível.
 
 ---
 
