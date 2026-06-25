@@ -1,0 +1,37 @@
+@startuml TrainingTimer_MaquinaDeEstado_Sessao
+
+skinparam backgroundColor #FFFFFF
+skinparam linetype ortho
+skinparam ranksep 100
+skinparam nodesep 150
+skinparam state {
+  BackgroundColor #EEF4FF
+  BorderColor #3B6FD4
+  FontSize 13
+  ArrowColor #3B6FD4
+}
+
+[*] --> Iniciada : aluno inicia o treino\n[atribuição vigente]
+
+Iniciada --> Executando : timer da primeira\nsérie começa
+
+Executando --> Pausada : aluno pausa
+
+Pausada --> Executando : aluno retoma
+
+Executando --> Descansando : série concluída\nou aluno pula série
+
+Descansando --> Executando : descanso encerrado\nou aluno pula descanso
+
+Descansando --> Interrompida : aluno encerra\ndurante descanso\n[status = INTERROMPIDA]
+
+Executando --> Interrompida : aluno encerra\ndurante execução\n[status = INTERROMPIDA]
+
+Pausada --> Interrompida : aluno encerra\ncom treino pausado\n[status = INTERROMPIDA]
+
+Executando --> Concluida : última série\ndo último bloco\nconcluída\n[status = COMPLETA]
+
+Interrompida --> [*] : sessão persistida
+Concluida --> [*] : sessão persistida
+
+@enduml

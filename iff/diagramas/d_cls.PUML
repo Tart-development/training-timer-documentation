@@ -1,0 +1,150 @@
+@startuml TrainingTimer_DiagramaDeClasses
+
+skinparam backgroundColor #FFFFFF
+skinparam classBackgroundColor #EEF4FF
+skinparam classBorderColor #3B6FD4
+skinparam classArrowColor #3B6FD4
+skinparam classFontSize 13
+skinparam classAttributeFontSize 12
+
+' ========================
+' ENUM
+' ========================
+enum TipoExecucao {
+  TEMPO
+  REPETICOES
+}
+
+enum StatusSessao {
+  COMPLETA
+  INTERROMPIDA
+}
+
+enum StatusMeta {
+  EM_PROGRESSO
+  ATINGIDA
+}
+
+' ========================
+' HIERARQUIA DE USUÁRIO
+' ========================
+abstract class Usuario {
+  - id : Long
+  - nome : String
+  - email : String
+  - senhaHash : String
+  - ativo : Boolean
+  + autenticar(email: String, senha: String) : Boolean
+  + desativar() : void
+}
+
+class Professor {
+  + criarFicha(nome: String) : FichaDeTreino
+  + atribuirFicha(ficha: FichaDeTreino, aluno: Aluno, inicio: Date, fim: Date) : Atribuicao
+  + definirMeta(aluno: Aluno, descricao: String) : Meta
+  + consultarHistorico(aluno: Aluno) : List<Sessao>
+}
+
+class Aluno {
+  + listarFichasVigentes() : List<FichaDeTreino>
+  + iniciarTreino(atribuicao: Atribuicao) : Sessao
+}
+
+Usuario <|-- Professor
+Usuario <|-- Aluno
+
+' ========================
+' FICHA DE TREINO
+' ========================
+class FichaDeTreino {
+  - id : Long
+  - nome : String
+  - criadoEm : DateTime
+  - ativo : Boolean
+  + adicionarBloco(nome: String, ordem: Integer) : Bloco
+  + desativar() : void
+  + duplicar() : FichaDeTreino
+}
+
+class Bloco {
+  - id : Long
+  - nome : String
+  - ordem : Integer
+  + adicionarSerie(nomeExercicio: String, tipo: TipoExecucao, valor: Integer, descansoseg: Integer) : Serie
+}
+
+class Serie {
+  - id : Long
+  - nomeExercicio : String
+  - tipo : TipoExecucao
+  - valor : Integer
+  - descansoSeg : Integer
+  - ordem : Integer
+}
+
+' ========================
+' ATRIBUIÇÃO E SESSÃO
+' ========================
+class Atribuicao {
+  - id : Long
+  - dataInicio : Date
+  - dataFim : Date
+  + estaVigente() : Boolean
+}
+
+class Sessao {
+  - id : Long
+  - iniciadoEm : DateTime
+  - duracaoSeg : Integer
+  - status : StatusSessao
+  + encerrar(status: StatusSessao, duracaoSeg: Integer) : void
+}
+
+' ========================
+' META
+' ========================
+class Meta {
+  - id : Long
+  - descricao : String
+  - status : StatusMeta
+  - nomeExercicio : String
+  + marcarComoAtingida() : void
+}
+
+' ========================
+' RELACIONAMENTOS
+' ========================
+
+' Professor cria fichas
+Professor "1" --> "0..*" FichaDeTreino : cria
+
+' Professor define metas
+Professor "1" --> "0..*" Meta : define
+
+' Meta pode referenciar ficha e aluno
+Meta "0..*" --> "1" Aluno : vinculada a
+Meta "0..*" --> "0..1" FichaDeTreino : referencia
+
+' Ficha composta por blocos
+FichaDeTreino "1" *-- "1..*" Bloco : contém
+
+' Bloco composto por séries
+Bloco "1" *-- "1..*" Serie : contém
+
+' Série usa enum
+Serie --> TipoExecucao
+
+' Atribuição vincula ficha e aluno
+FichaDeTreino "1" --> "0..*" Atribuicao
+Aluno "1" --> "0..*" Atribuicao : recebe
+
+' Sessão gerada por atribuição
+Atribuicao "1" --> "0..*" Sessao : gera
+
+' Sessão usa enum
+Sessao --> StatusSessao
+
+' Meta usa enum
+Meta --> StatusMeta
+
+@enduml

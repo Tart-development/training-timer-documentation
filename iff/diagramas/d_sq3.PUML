@@ -1,0 +1,98 @@
+@startuml UC03_ExecutarTreino_Sequencia
+
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowColor #3B6FD4
+skinparam sequenceLifeLineBorderColor #3B6FD4
+skinparam sequenceParticipantBackgroundColor #EEF4FF
+skinparam sequenceParticipantBorderColor #3B6FD4
+skinparam sequenceActorBackgroundColor #D6E8FF
+skinparam sequenceActorBorderColor #3B6FD4
+
+actor "Aluno" as Al
+
+participant "<<boundary>>\nAppTreinoUI" as UI
+participant "<<control>>\nTreinoController" as Ctrl
+participant "<<entity>>\nAtribuicao" as Atrib
+participant "<<entity>>\nFichaDeTreino" as Ficha
+participant "<<entity>>\nSerie" as Serie
+participant "<<entity>>\nSessao" as Sessao
+
+Al -> UI : abrirApp()
+UI -> Ctrl : buscarFichasVigentes(alunoId)
+Ctrl -> Atrib : listarVigentes(alunoId)
+
+alt nenhuma atribuição vigente
+  Atrib --> Ctrl : lista vazia
+  Ctrl --> UI : exibirMensagem("Nenhuma ficha disponível")
+  UI --> Al : sem fichas vigentes
+else fichas vigentes encontradas
+  Atrib --> Ctrl : listaAtribuicoes
+  Ctrl --> UI : exibirListaFichas(listaAtribuicoes)
+end
+
+Al -> UI : selecionarFicha(atribuicaoId)
+UI -> Ctrl : iniciarTreino(atribuicaoId)
+Ctrl -> Atrib : buscarComFicha(atribuicaoId)
+Atrib -> Ficha : carregarBlocosESeries()
+Ficha --> Ctrl : estruturaCompleta
+
+Ctrl -> Sessao : new Sessao(atribuicaoId, agora)
+Sessao --> Ctrl : sessaoIniciada
+
+Ctrl --> UI : exibirPrimeiraSerie(serie)
+UI --> Al : nome, tipo, valor, descansoSeg
+
+loop para cada Série em cada Bloco
+
+  UI -> Ctrl : confirmarInicioSerie()
+  Ctrl --> UI : emitirSomInicio()
+
+  alt aluno pausa
+    Al -> UI : pausar()
+    UI -> Ctrl : pausarSessao()
+    Ctrl --> UI : congelarTimer()
+
+    Al -> UI : retomar()
+    UI -> Ctrl : retomarSessao()
+    Ctrl --> UI : continuarTimer()
+  end
+
+  alt aluno pula série
+    Al -> UI : pularSerie()
+    UI -> Ctrl : avancarParaProximaSerie()
+    Ctrl --> UI : carregarProximaSerie()
+  else aluno retrocede
+    Al -> UI : retrocederSerie()
+    UI -> Ctrl : voltarParaSerieAnterior()
+    Ctrl --> UI : carregarSerieAnterior()
+  else série concluída normalmente
+    Ctrl --> UI : emitirSomAvisoFim()
+    Ctrl --> UI : emitirSomInicioDescanso()
+    UI --> Al : exibirTelaDescanso(proximaSerie)
+
+    Ctrl --> UI : encerrarDescanso()
+    Ctrl -> Serie : buscarProxima()
+
+    alt existe próxima série
+      Serie --> Ctrl : proximaSerie
+      Ctrl --> UI : exibirSerie(proximaSerie)
+    end
+  end
+
+end
+
+Ctrl -> Sessao : encerrar(COMPLETA, duracaoSeg)
+Sessao --> Ctrl : sessaoPersistida
+Ctrl --> UI : exibirTelaConclusao()
+UI --> Al : treino concluído
+
+alt aluno interrompe antes do fim
+  Al -> UI : encerrarTreino()
+  UI -> Ctrl : interromperSessao()
+  Ctrl -> Sessao : encerrar(INTERROMPIDA, duracaoSeg)
+  Sessao --> Ctrl : sessaoPersistida
+  Ctrl --> UI : exibirTelaConclusao()
+  UI --> Al : treino interrompido — sessão registrada
+end
+
+@enduml

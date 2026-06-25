@@ -1,0 +1,70 @@
+@startuml UC01_CriarFicha_Sequencia
+
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowColor #3B6FD4
+skinparam sequenceLifeLineBorderColor #3B6FD4
+skinparam sequenceParticipantBackgroundColor #EEF4FF
+skinparam sequenceParticipantBorderColor #3B6FD4
+skinparam sequenceActorBackgroundColor #D6E8FF
+skinparam sequenceActorBorderColor #3B6FD4
+
+actor "Professor" as Prof
+
+participant "<<boundary>>\nPortalFichaUI" as UI
+participant "<<control>>\nFichaController" as Ctrl
+participant "<<entity>>\nFichaDeTreino" as Ficha
+participant "<<entity>>\nBloco" as Bloco
+participant "<<entity>>\nSerie" as Serie
+
+Prof -> UI : acessar "Nova Ficha"
+UI -> Ctrl : solicitarFormularioCriacao()
+Ctrl --> UI : exibirFormulario()
+
+Prof -> UI : preencherNome(nome)
+UI -> Ctrl : criarFicha(nome, professorId)
+
+Ctrl -> Ctrl : validarNome(nome)
+
+alt nome inválido ou vazio
+  Ctrl --> UI : erro("Nome obrigatório")
+  UI --> Prof : exibirMensagemErro()
+else nome válido
+  Ctrl -> Ficha : new FichaDeTreino(nome, professorId, agora)
+  Ficha --> Ctrl : fichaCriada
+  Ctrl --> UI : exibirTelaEdicaoFicha(fichaCriada)
+end
+
+Prof -> UI : adicionarBloco(nome, ordem)
+UI -> Ctrl : criarBloco(fichaId, nome, ordem)
+
+Ctrl -> Ctrl : validarBloco(nome, ordem)
+
+alt dados inválidos
+  Ctrl --> UI : erro("Dados do bloco inválidos")
+  UI --> Prof : exibirMensagemErro()
+else dados válidos
+  Ctrl -> Bloco : new Bloco(fichaId, nome, ordem)
+  Bloco --> Ctrl : blocoCriado
+  Ctrl --> UI : exibirBlocoNaFicha(blocoCriado)
+end
+
+Prof -> UI : adicionarSerie(nomeExercicio, tipo, valor, descansoSeg, ordem)
+UI -> Ctrl : criarSerie(blocoId, nomeExercicio, tipo, valor, descansoSeg, ordem)
+
+Ctrl -> Ctrl : validarSerie(valor, descansoSeg)
+
+alt valor ou descanso inválido
+  Ctrl --> UI : erro("Valor deve ser maior que zero")
+  UI --> Prof : exibirMensagemErro()
+else dados válidos
+  Ctrl -> Serie : new Serie(blocoId, nomeExercicio, tipo, valor, descansoSeg, ordem)
+  Serie --> Ctrl : serieCriada
+  Ctrl --> UI : exibirSerieNoBloco(serieCriada)
+end
+
+Prof -> UI : confirmarFicha()
+UI -> Ctrl : salvarFicha(fichaId)
+Ctrl --> UI : exibirListagemFichas()
+UI --> Prof : fichaDisponível para atribuição
+
+@enduml

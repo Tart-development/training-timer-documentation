@@ -1,0 +1,60 @@
+@startuml TrainingTimer_CasosDeUso
+
+skinparam backgroundColor #FFFFFF
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor #EEF4FF
+  BorderColor #3B6FD4
+  FontSize 13
+}
+skinparam actor {
+  BackgroundColor #D6E8FF
+  BorderColor #3B6FD4
+}
+skinparam arrow {
+  Color #3B6FD4
+}
+skinparam packageStyle rectangle
+
+left to right direction
+
+actor "Professor" as Prof
+actor "Aluno" as Aluno
+
+rectangle "Training Timer – TT IFF" {
+
+  package "Portal Web" {
+    usecase "Fazer Login\n(Portal Web)" as UC_LoginProf
+    usecase "Gerenciar Alunos" as UC_GerAlunos
+    usecase "**[UC01]** Criar e Estruturar\nFicha de Treino" as UC01
+    usecase "Adicionar Bloco e Série" as UC_AddBloco
+    usecase "**[UC02]** Atribuir Ficha\na Aluno" as UC02
+    usecase "Consultar Histórico\nde Sessões" as UC_Historico
+  }
+
+  package "App Mobile" {
+    usecase "Fazer Login\n(App Mobile)" as UC_LoginAluno
+    usecase "Visualizar Fichas Vigentes" as UC_VerFichas
+    usecase "**[UC03]** Executar Treino\ncom Timer" as UC03
+    usecase "Registrar Sessão" as UC_RegSessao
+  }
+}
+
+' Associações do Professor
+Prof --> UC_LoginProf
+Prof --> UC_GerAlunos
+Prof --> UC01
+Prof --> UC02
+Prof --> UC_Historico
+
+' Associações do Aluno
+Aluno --> UC_LoginAluno
+Aluno --> UC03
+
+' Relacionamentos estruturais
+UC01 .> UC_AddBloco : <<include>>
+UC03 .> UC_VerFichas : <<include>>
+UC03 .> UC_RegSessao : <<include>>
+UC02 .> UC_GerAlunos : <<extend>>
+
+@enduml

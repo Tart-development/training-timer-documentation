@@ -1,0 +1,62 @@
+@startuml UC02_AtribuirFicha_Sequencia
+
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowColor #3B6FD4
+skinparam sequenceLifeLineBorderColor #3B6FD4
+skinparam sequenceParticipantBackgroundColor #EEF4FF
+skinparam sequenceParticipantBorderColor #3B6FD4
+skinparam sequenceActorBackgroundColor #D6E8FF
+skinparam sequenceActorBorderColor #3B6FD4
+
+actor "Professor" as Prof
+
+participant "<<boundary>>\nPortalAtribuicaoUI" as UI
+participant "<<control>>\nAtribuicaoController" as Ctrl
+participant "<<entity>>\nAluno" as Aluno
+participant "<<entity>>\nFichaDeTreino" as Ficha
+participant "<<entity>>\nAtribuicao" as Atrib
+
+Prof -> UI : acessar "Atribuir Ficha"
+UI -> Ctrl : solicitarDadosAtribuicao()
+Ctrl --> UI : exibirFormularioAtribuicao()
+
+Prof -> UI : selecionarAluno(alunoId)
+UI -> Ctrl : buscarAluno(alunoId)
+Ctrl -> Aluno : verificarAtivo(alunoId)
+
+alt aluno inativo
+  Aluno --> Ctrl : ativo = false
+  Ctrl --> UI : erro("Aluno inativo — atribuição não permitida")
+  UI --> Prof : exibirMensagemErro()
+else aluno ativo
+  Aluno --> Ctrl : ativo = true
+  Ctrl --> UI : confirmarSelecaoAluno()
+end
+
+Prof -> UI : selecionarFicha(fichaId)
+UI -> Ctrl : buscarFicha(fichaId)
+Ctrl -> Ficha : verificarAtivo(fichaId)
+
+alt ficha inativa
+  Ficha --> Ctrl : ativo = false
+  Ctrl --> UI : erro("Ficha inativa — atribuição não permitida")
+  UI --> Prof : exibirMensagemErro()
+else ficha ativa
+  Ficha --> Ctrl : ativo = true
+  Ctrl --> UI : confirmarSelecaoFicha()
+end
+
+Prof -> UI : informarVigencia(dataInicio, dataFim)
+UI -> Ctrl : validarVigencia(dataInicio, dataFim)
+
+alt dataFim < dataInicio
+  Ctrl --> UI : erro("Data de fim anterior à data de início")
+  UI --> Prof : exibirMensagemErro()
+else vigência válida
+  Ctrl -> Atrib : new Atribuicao(fichaId, alunoId, dataInicio, dataFim)
+  Atrib --> Ctrl : atribuicaoCriada
+  Ctrl --> UI : exibirConfirmacaoAtribuicao(atribuicaoCriada)
+  UI --> Prof : atribuição realizada com sucesso
+end
+
+@enduml
